@@ -22,8 +22,9 @@ IntList::IntList(const IntList& source) {
 IntList::~IntList() {
     Node* curr = head;
     while(curr != nullptr){
+        Node* next = curr->next;
         delete curr;
-        curr = curr -> next;
+        curr = next;
     }
 }
 
@@ -53,7 +54,7 @@ bool IntList::contains(int value) const {
 
 // returns maximum value in list, or 0 if empty list
 int IntList::max() const {
-    Node* curr = head;
+    Node* curr = head -> next;
     int max = curr -> info;
     while (curr != nullptr){
         if (curr -> info > max ){
@@ -90,9 +91,12 @@ void IntList::push_back(int value) {
     Node* newnode = new Node;
     newnode -> info = value;
     newnode -> next = nullptr;
-    tail = newnode;
-    if(head == nullptr){
-        head == newnode;
+    if (head == nullptr) {
+        head = newnode;
+        tail = newnode;
+    } else {
+        tail->next = newnode; 
+        tail = newnode;
     }
 }
 
@@ -111,6 +115,7 @@ int IntList::count() const {
 //Assignment operator should copy the list from the source
 //to this list, deleting/replacing any existing nodes
 IntList& IntList::operator=(const IntList& source){
+    if (this == &source) return *this;
     Node* current = head;
     while (current != nullptr) {
         Node* next = current->next;
