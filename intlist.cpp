@@ -54,8 +54,9 @@ bool IntList::contains(int value) const {
 
 // returns maximum value in list, or 0 if empty list
 int IntList::max() const {
+    if (head == nullptr) return 0;
     Node* curr = head -> next;
-    int max = curr -> info;
+    int max = head -> info;
     while (curr != nullptr){
         if (curr -> info > max ){
             max = curr -> info;
@@ -69,7 +70,7 @@ int IntList::max() const {
 // 0 if list is empty
 double IntList::average() const {
     if (count() == 0){
-        return 0;
+        return 0.0;
     }
     double result = static_cast<double> (sum()) / count();
     return result;
